@@ -4,6 +4,11 @@
 * tests creation 1h
 * final tests preparing readme 2h
 
+# installation
+* docker-compose up -d
+* service page http://localhost:8080/jsonRpc
+* service created in RESTFull api manner in json-rpc style.
+
 # api execution
 ```shell script
 curl --location --request GET 'http://localhost:8080/jsonRpc' \
