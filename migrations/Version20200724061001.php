@@ -1,4 +1,4 @@
-<?php
+<?php /** @noinspection SqlDialectInspection */
 
 declare(strict_types=1);
 
@@ -20,12 +20,12 @@ final class Version20200724061001 extends AbstractMigration
     public function up(Schema $schema) : void
     {
         $this->addSql("CREATE TABLE IF NOT EXISTS `history` (
-  `id` int(11) NOT NULL,
-  `formula` varchar(128) NOT NULL,
-  `result` float NOT NULL,
-  `executed` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1");
+          `id` int(11) NOT NULL AUTO_INCREMENT,
+          `formula` varchar(128) NOT NULL,
+          `result` float NOT NULL,
+          `executed` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+          PRIMARY KEY (`id`)
+        ) ENGINE=InnoDB DEFAULT CHARSET=latin1");
 
     }
 

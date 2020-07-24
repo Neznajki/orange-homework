@@ -5,11 +5,10 @@ namespace App\Repository;
 
 
 use App\Entity\History;
-use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\OptimisticLockException;
 use Doctrine\ORM\ORMException;
 
-class HistoryRepository extends ServiceEntityRepository
+class HistoryRepository extends AbstractRepository
 {
     /**
      * @param History $entity
@@ -20,5 +19,19 @@ class HistoryRepository extends ServiceEntityRepository
     {
         $this->getEntityManager()->persist($entity);
         $this->getEntityManager()->flush($entity);
+    }
+
+    /**
+     * @param int $limit
+     * @return History[]
+     */
+    public function getLastRecords(int $limit): array
+    {
+        return $this->findBy([], ['executed' => 'desc'], $limit);
+    }
+
+    protected function getEntityClassName(): string
+    {
+        return History::class;
     }
 }

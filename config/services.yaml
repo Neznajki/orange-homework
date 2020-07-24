@@ -43,3 +43,6 @@ services:
 
     App\Api\CalculateMethod:
         tags: [ 'json.rpc.server.method' ]
+
+    App\Api\GetLastMethod:
+        tags: [ 'json.rpc.server.method' ]

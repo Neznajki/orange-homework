@@ -44,6 +44,14 @@ class History
     private $executed = 'CURRENT_TIMESTAMP';
 
     /**
+     * History constructor.
+     */
+    public function __construct()
+    {
+        $this->executed = new DateTime();
+    }
+
+    /**
      * @return int
      */
     public function getId(): int

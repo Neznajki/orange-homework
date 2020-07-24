@@ -8,6 +8,7 @@ use App\Service\CalculatorService;
 use Doctrine\ORM\OptimisticLockException;
 use Doctrine\ORM\ORMException;
 use JsonRpcServerBundle\Contract\MethodHandlerInterface;
+use JsonRpcServerBundle\Exception\InvalidParamsException;
 use JsonRpcServerBundle\Exception\RpcMessageException;
 
 class CalculateMethod implements MethodHandlerInterface
@@ -49,8 +50,16 @@ class CalculateMethod implements MethodHandlerInterface
         return ['formula'];
     }
 
-    public function setParameter(string $paramName, $arg): void
+    public function setParameter(string $paramName, $value): void
     {
-        $this->$paramName = $arg;
+        switch ($paramName) {
+            case 'formula':
+                $this->formula = $value;
+                break;
+            default:
+                throw new InvalidParamsException("parameter {$paramName} is not supported");
+        }
+
+//        $this->$paramName = $arg;
     }
 }
