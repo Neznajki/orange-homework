@@ -67,7 +67,7 @@ class GroupFormula implements FormulaPartInterface
     {
         $i = 0;
         $maxIterations = 100;
-        $regex = sprintf('@(\d+)([%s]{1})(\d+)@', $symbols);
+        $regex = sprintf('@([0-9.]+)([%s]{1})([0-9.]+)@', $symbols);
         while (preg_match_all($regex, $this->formula, $matches)) {
             $i ++;
 
