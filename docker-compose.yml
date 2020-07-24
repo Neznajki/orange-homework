@@ -1,0 +1,51 @@
+version: "3.1"
+services:
+    calculator-service:
+        hostname: calculator-service
+        container_name: calculator-service
+        network_mode: host
+        user: ${UID}
+        build:
+            ./.docker
+        ports:
+            - "8080:8080"
+        expose:
+          - 8080
+        volumes:
+            - ./:/www/default:cached
+            - $HOME/.composer:$HOME/.composer:cached
+            - /opt/phpstorm-coverage/:/opt/phpstorm-coverage/:cached
+
+        environment:
+            - DOCKER_USER_ID=${UID:-1000}
+            - DOCKER_USER_GID=${DOCKER_USER_GID:-1000}
+            - VIRTUAL_HOST=calculator-service.local
+            - APACHE_DOCUMENT_ROOT=/www/default/public
+            - HOME=$HOME
+
+        depends_on:
+            - mysql-calculator
+
+    mysql-calculator:
+        hostname: mysql-calculator.local
+        image: mysql:5.7
+        container_name: mysql-calculator
+        # restart can be removed
+        environment:
+            MYSQL_DATABASE: 'calculator'
+            # So you don't have to use root, but you can if you like
+            MYSQL_USER: 'user'
+            # You can use whatever password you like
+            MYSQL_PASSWORD: '1'
+            # Password for root access
+            MYSQL_ROOT_PASSWORD: 'p1assword'
+        ports:
+            # <Port exposed> : < MySQL Port running inside container>
+            - '3366:3306'
+        expose:
+            # Opens port 3366 on the container
+            - '3306'
+            # Where our data will be persisted
+        volumes:
+            - /docker-common-meta-files/mysql/calculator:/var/lib/mysql:cached
+            # please define cache folder for database metadata (to preserve state)

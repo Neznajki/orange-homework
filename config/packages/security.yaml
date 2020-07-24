@@ -1,0 +1,19 @@
+security:
+    # https://symfony.com/doc/current/security.html#where-do-users-come-from-user-providers
+    providers:
+        #...
+        jsonRpcProvider:
+            id: JsonRpcAuthorizationBundle\Service\DefaultUserProviderService
+
+    firewalls:
+        #...
+        jsonRpc:
+            pattern: ^/jsonRpc
+            provider: jsonRpcProvider
+            guard:
+                authenticators:
+                    - JsonRpcAuthorizationBundle\Service\AuthenticationService
+
+    access_control:
+        #...
+        - { path: '^/jsonRpc', roles: ROLE_RPC_USER}
