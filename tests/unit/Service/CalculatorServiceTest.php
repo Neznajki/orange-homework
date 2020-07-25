@@ -39,7 +39,8 @@ class CalculatorServiceTest extends AbstractSimpleCodeceptionTest
         );
         $mock = $this->createMockExpectsNoUsage(History::class);
 
-        $function = function($f, $r) use ($mock, $formula, $expectingResult){
+
+        $function = function($f, /* @noinspection PhpUnusedParameterInspection*/$r) use ($mock, $formula, $expectingResult){
             if (preg_replace('/\\s/','',$formula) != $f) {
                 throw new LogicException("formula does not match");
             }
@@ -70,6 +71,9 @@ class CalculatorServiceTest extends AbstractSimpleCodeceptionTest
             ['formula' => '(2+2)/5', 'expectingResult' => (2+2)/5],
             ['formula' => '(2+2 * 2)/5', 'expectingResult' => (2+2*2)/5],
             ['formula' => '(20+4-5)+ ( 44-22/22)+30*5.5 ', 'expectingResult' => (20+4-5)+(44-22/22)+30*5.5],
+            ['formula' => '-2+3', 'expectingResult' => -2+3],
+            ['formula' => '+2+3', 'expectingResult' => +2+3],
+            ['formula' => '+2+3 *- (44)', 'expectingResult' => +2+3 *- (44)],
         ];
     }
 

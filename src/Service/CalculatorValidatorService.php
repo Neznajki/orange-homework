@@ -21,12 +21,23 @@ class CalculatorValidatorService
         }
 
         if (
-            preg_match('@[-+*/.]{2,}@', $formula) ||
-            preg_match('@^[-+*/.]@', $formula) ||
+            $this->isDoubleSigned($formula) ||
+            preg_match('@^[*/.]@', $formula) ||
             preg_match('@[-+*/.]$@', $formula) ||
             preg_match('@[0-9]+\\.[0-9]+\\.@', $formula)
         ) {
             throw new RpcMessageException('invalid formula detected');
         }
+    }
+
+    /**
+     * @param string $formula
+     * @return bool
+     */
+    public function isDoubleSigned(string $formula): bool
+    {
+        return
+            preg_match('@[-+*/.][-+*/.]@', $formula) &&
+            ! preg_match('@[*/][-+]@', $formula);
     }
 }

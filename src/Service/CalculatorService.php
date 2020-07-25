@@ -43,7 +43,7 @@ class CalculatorService
         $formula = $this->cleanFormula($formula);
         $this->validator->validateFormula($formula);
 
-        $groupFormula = new GroupFormula($formula);
+        $groupFormula = new GroupFormula($formula, $this->validator);
         $result = $groupFormula->getValue();
 
         $this->historyRepository->addResult(
