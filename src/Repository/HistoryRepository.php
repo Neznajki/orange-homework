@@ -43,9 +43,4 @@ class HistoryRepository extends ServiceEntityRepository
     {
         return $this->findBy([], ['executed' => 'desc'], $limit);
     }
-
-    protected function getEntityClassName(): string
-    {
-        return History::class;
-    }
 }
